@@ -3,13 +3,16 @@ import { View, Text } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import reducers from './reducers';
+
+import { Header } from './components/common';
+
 class App extends React.Component {
 
   render(){
     return (
       <Provider store={createStore(reducers)}>
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <Text>HELLO WORLD</Text>
+        <View>
+          <Header title="Tech Stack" />
         </View>
 
       </Provider>
