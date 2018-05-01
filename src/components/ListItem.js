@@ -1,17 +1,24 @@
 import React from 'react';
-import { View, Text, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, TouchableWithoutFeedback, LayoutAnimation } from 'react-native';
 import { connect } from 'react-redux';
 import { CardItem } from './common';
 import * as actions from '../actions';
 
 class ListItem extends React.Component {
 
-  renderDescription(){
-    const { library, selectedLibraryId } = this.props;
+  componentWillUpdate(){
+    LayoutAnimation.configureNext(CustomLayoutSpring);
+  }
 
-    if(library.id === selectedLibraryId){
+  renderDescription(){
+    const { library, expanded } = this.props;
+
+    if(expanded){
       return (
-        <Text>{library.description}</Text>
+        <CardItem>
+          <Text style={styles.expandedTextStyle}>{library.description}</Text>
+
+        </CardItem>
       )
     }
   }
@@ -39,11 +46,31 @@ const styles = {
   titleStyle: {
     fontSize: 18,
     paddingLeft: 15
+  },
+  expandedTextStyle: {
+    flex: 1,
+    paddingLeft: 10,
+    paddingRight: 10
   }
 }
 
-const mapStateToProps = state => {
-  return { selectedLibraryId: state.selectedLibraryId }
+const CustomLayoutSpring = {
+duration: 400,
+  create: {
+    type: LayoutAnimation.Types.spring,
+    property: LayoutAnimation.Properties.opacity,
+    springDamping: 0.7,
+  },
+  update: {
+    type: LayoutAnimation.Types.spring,
+
+    springDamping: 0.7,
+  },
+};
+
+const mapStateToProps = (state, ownProps) => {
+  const expanded = state.selectedLibraryId === ownProps.library.id;
+  return { expanded }
 }
 
 export default connect(mapStateToProps, actions)(ListItem);

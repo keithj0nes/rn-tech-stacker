@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { View, Text, ListView } from 'react-native';
+import { CardItem } from './common';
 
 import ListItem from './ListItem';
 
@@ -21,10 +22,14 @@ class LibraryList extends React.Component {
   render(){
     console.log(this.props);
     return (
+      <View>
       <ListView
         dataSource={this.dataSource}
         renderRow={this.renderRow}
       />
+
+      </View>
+
     )
   }
 }

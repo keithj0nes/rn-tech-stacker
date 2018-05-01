@@ -1,9 +1,12 @@
-export default (state = [], action) => {
+export default (state = null, action) => {
   console.log(action);
 
   switch (action.type){
     case "SELECT_LIBRARY":
-      return action.payload
+      if(action.payload === state){
+        return null;
+      }
+      return action.payload;
     default:
       return state;
   }
